@@ -1,0 +1,12 @@
+7 Day goals
+
+- Work Log + Tag + Project + Resources collections complete
+- Hosted somewhere + GitHub
+
+TODO:
+
+- Additional collections: Goals, Mentor/Mentee, Resources, Surveys, Habits(?)
+
+- User Stories
+
+How can I track each time I did something related to a personal goal or project? For example, log a learning session? Track streak and log time spent on personal project?

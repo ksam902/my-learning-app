@@ -16,6 +16,12 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    tasks: Task;
+    tags: Tag;
+    projects: Project;
+    goals: Goal;
+    resources: Resource;
+    sessions: Session;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -24,13 +30,35 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    tasks: {
+      relatedSessions: 'sessions';
+    };
+    tags: {
+      relatedGoals: 'goals';
+      relatedProjects: 'projects';
+      relatedTasks: 'tasks';
+      relatedResources: 'resources';
+    };
+    projects: {
+      relatedTasks: 'tasks';
+    };
+    goals: {
+      relatedProjects: 'projects';
+    };
+  };
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    tasks: TasksSelect<false> | TasksSelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    goals: GoalsSelect<false> | GoalsSelect<true>;
+    resources: ResourcesSelect<false> | ResourcesSelect<true>;
+    sessions: SessionsSelect<false> | SessionsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -638,6 +666,156 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tasks".
+ */
+export interface Task {
+  id: string;
+  title: string;
+  description?: string | null;
+  codeSnippets?:
+    | {
+        title: string;
+        code: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  relatedSessions?: {
+    docs?: (string | Session)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  status: 'not-started' | 'in-progress' | 'completed' | 'blocked' | 'needs-review';
+  taskType: 'learning' | 'implementation' | 'bug-fix' | 'documentation' | 'research' | 'review' | 'refactoring';
+  tags?: (string | Tag)[] | null;
+  relatedProject?: (string | null) | Project;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sessions".
+ */
+export interface Session {
+  id: string;
+  progress?: string | null;
+  learning?:
+    | {
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  blockers?:
+    | {
+        description: string;
+        resolution?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  nextSteps?: string | null;
+  date: string;
+  duration: number;
+  timeOfDay?: ('morning' | 'afternoon' | 'evening') | null;
+  tasks?: (string | Task)[] | null;
+  energy?: ('1' | '2' | '3' | '4' | '5') | null;
+  focus?: ('1' | '2' | '3' | '4' | '5') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: string;
+  title: string;
+  relatedGoals?: {
+    docs?: (string | Goal)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  relatedProjects?: {
+    docs?: (string | Project)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  relatedTasks?: {
+    docs?: (string | Task)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  relatedResources?: {
+    docs?: (string | Resource)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "goals".
+ */
+export interface Goal {
+  id: string;
+  title: string;
+  description?: string | null;
+  milestones?:
+    | {
+        title: string;
+        completed?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  relatedProjects?: {
+    docs?: (string | Project)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  status: 'not-started' | 'in-progress' | 'completed';
+  goalType: 'personal' | 'work';
+  tags?: (string | Tag)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: string;
+  title: string;
+  description?: string | null;
+  objectives?:
+    | {
+        title: string;
+        completed?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  relatedTasks?: {
+    docs?: (string | Task)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  projectType: 'personal' | 'work';
+  tags?: (string | Tag)[] | null;
+  relatedGoals?: (string | Goal)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources".
+ */
+export interface Resource {
+  id: string;
+  title: string;
+  description?: string | null;
+  url?: string | null;
+  tags?: (string | Tag)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -730,6 +908,30 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: string | User;
+      } | null)
+    | ({
+        relationTo: 'tasks';
+        value: string | Task;
+      } | null)
+    | ({
+        relationTo: 'tags';
+        value: string | Tag;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: string | Project;
+      } | null)
+    | ({
+        relationTo: 'goals';
+        value: string | Goal;
+      } | null)
+    | ({
+        relationTo: 'resources';
+        value: string | Resource;
+      } | null)
+    | ({
+        relationTo: 'sessions';
+        value: string | Session;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1081,6 +1283,129 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tasks_select".
+ */
+export interface TasksSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  codeSnippets?:
+    | T
+    | {
+        title?: T;
+        code?: T;
+        description?: T;
+        id?: T;
+      };
+  relatedSessions?: T;
+  startDate?: T;
+  endDate?: T;
+  status?: T;
+  taskType?: T;
+  tags?: T;
+  relatedProject?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags_select".
+ */
+export interface TagsSelect<T extends boolean = true> {
+  title?: T;
+  relatedGoals?: T;
+  relatedProjects?: T;
+  relatedTasks?: T;
+  relatedResources?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  objectives?:
+    | T
+    | {
+        title?: T;
+        completed?: T;
+        id?: T;
+      };
+  relatedTasks?: T;
+  projectType?: T;
+  tags?: T;
+  relatedGoals?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "goals_select".
+ */
+export interface GoalsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  milestones?:
+    | T
+    | {
+        title?: T;
+        completed?: T;
+        id?: T;
+      };
+  relatedProjects?: T;
+  startDate?: T;
+  endDate?: T;
+  status?: T;
+  goalType?: T;
+  tags?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources_select".
+ */
+export interface ResourcesSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  url?: T;
+  tags?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sessions_select".
+ */
+export interface SessionsSelect<T extends boolean = true> {
+  progress?: T;
+  learning?:
+    | T
+    | {
+        description?: T;
+        id?: T;
+      };
+  blockers?:
+    | T
+    | {
+        description?: T;
+        resolution?: T;
+        id?: T;
+      };
+  nextSteps?: T;
+  date?: T;
+  duration?: T;
+  timeOfDay?: T;
+  tasks?: T;
+  energy?: T;
+  focus?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -11,6 +11,12 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
+import { Tasks } from './collections/Tasks'
+import { Tags } from './collections/Tags'
+import { Projects } from './collections/Projects'
+import { Goals } from './collections/Goals'
+import { Resources } from './collections/Resources'
+import { Sessions } from './collections/Sessions'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -62,7 +68,19 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [
+    Pages,
+    Posts,
+    Media,
+    Categories,
+    Users,
+    Tasks,
+    Tags,
+    Projects,
+    Goals,
+    Resources,
+    Sessions,
+  ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
