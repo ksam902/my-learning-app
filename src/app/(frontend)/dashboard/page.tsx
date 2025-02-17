@@ -23,11 +23,11 @@ export default async function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
           <GoalsBlock />
-          <SessionHeatmapBlock />
+          <GoalBreakdownBlock />
         </div>
         <div>
+          <SessionHeatmapBlock />
           <RecentActivityBlock />
-          <GoalBreakdownBlock />
         </div>
       </div>
     </article>
