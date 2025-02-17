@@ -124,7 +124,7 @@ export const SessionHeatmapClient: React.FC<{ sessions: Session[] }> = ({ sessio
               return `${value.count} sessions on ${value.date}`
             }}
             showWeekdayLabels={true}
-            weekdayLabels={['Mon', '', 'Wed', '', 'Fri', '']}
+            weekdayLabels={['Sun', 'Mon', '', 'Wed', '', 'Fri', '']}
           />
         </div>
 

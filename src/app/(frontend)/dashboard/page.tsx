@@ -7,6 +7,7 @@ import React from 'react'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import PageClient from './page.client'
 import SessionHeatmapBlock from '@/blocks/SessionHeatmapBlock/Component'
+import { RecentActivityBlock } from '@/blocks/RecentActivityBlock/Component'
 
 export default async function Dashboard() {
   const { isEnabled: draft } = await draftMode()
@@ -18,8 +19,15 @@ export default async function Dashboard() {
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
 
-      <GoalsBlock />
-      <SessionHeatmapBlock />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div>
+          <GoalsBlock />
+          <SessionHeatmapBlock />
+        </div>
+        <div>
+          <RecentActivityBlock />
+        </div>
+      </div>
     </article>
   )
 }

@@ -76,20 +76,6 @@ export const Tasks: CollectionConfig = {
           ],
           label: 'Code Snippets',
         },
-        {
-          fields: [
-            {
-              name: 'relatedSessions',
-              type: 'join',
-              collection: 'sessions',
-              on: 'tasks',
-              admin: {
-                description: 'Sessions logged to this Task',
-              },
-            },
-          ],
-          label: 'Related Sessions',
-        },
       ],
     },
     {

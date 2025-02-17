@@ -31,9 +31,6 @@ export interface Config {
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {
-    tasks: {
-      relatedSessions: 'sessions';
-    };
     tags: {
       relatedGoals: 'goals';
       relatedProjects: 'projects';
@@ -45,6 +42,7 @@ export interface Config {
     };
     goals: {
       relatedProjects: 'projects';
+      relatedSessions: 'sessions';
     };
   };
   collectionsSelect: {
@@ -687,46 +685,12 @@ export interface Task {
         id?: string | null;
       }[]
     | null;
-  relatedSessions?: {
-    docs?: (string | Session)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
   startDate?: string | null;
   endDate?: string | null;
   status: 'not-started' | 'in-progress' | 'completed' | 'blocked' | 'needs-review';
   taskType: 'learning' | 'implementation' | 'bug-fix' | 'documentation' | 'research' | 'review' | 'refactoring';
   tags?: (string | Tag)[] | null;
   relatedProject?: (string | null) | Project;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sessions".
- */
-export interface Session {
-  id: string;
-  progress?: string | null;
-  learning?:
-    | {
-        description: string;
-        id?: string | null;
-      }[]
-    | null;
-  blockers?:
-    | {
-        description: string;
-        resolution?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  nextSteps?: string | null;
-  date: string;
-  duration: number;
-  timeOfDay?: ('morning' | 'afternoon' | 'evening') | null;
-  tasks?: (string | Task)[] | null;
-  energy?: ('1' | '2' | '3' | '4' | '5') | null;
-  focus?: ('1' | '2' | '3' | '4' | '5') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -775,6 +739,10 @@ export interface Goal {
     docs?: (string | Project)[] | null;
     hasNextPage?: boolean | null;
   } | null;
+  relatedSessions?: {
+    docs?: (string | Session)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   startDate?: string | null;
   endDate?: string | null;
   status: 'not-started' | 'in-progress' | 'completed';
@@ -805,6 +773,36 @@ export interface Project {
   projectType: 'personal' | 'work';
   tags?: (string | Tag)[] | null;
   relatedGoals?: (string | Goal)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sessions".
+ */
+export interface Session {
+  id: string;
+  progress?: string | null;
+  learning?:
+    | {
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  blockers?:
+    | {
+        description: string;
+        resolution?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  nextSteps?: string | null;
+  date: string;
+  duration: number;
+  timeOfDay?: ('morning' | 'afternoon' | 'evening') | null;
+  goals?: (string | Goal)[] | null;
+  energy?: ('1' | '2' | '3' | '4' | '5') | null;
+  focus?: ('1' | '2' | '3' | '4' | '5') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1313,7 +1311,6 @@ export interface TasksSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
-  relatedSessions?: T;
   startDate?: T;
   endDate?: T;
   status?: T;
@@ -1372,6 +1369,7 @@ export interface GoalsSelect<T extends boolean = true> {
         id?: T;
       };
   relatedProjects?: T;
+  relatedSessions?: T;
   startDate?: T;
   endDate?: T;
   status?: T;
@@ -1415,7 +1413,7 @@ export interface SessionsSelect<T extends boolean = true> {
   date?: T;
   duration?: T;
   timeOfDay?: T;
-  tasks?: T;
+  goals?: T;
   energy?: T;
   focus?: T;
   updatedAt?: T;

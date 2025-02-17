@@ -50,6 +50,15 @@ export const Goals: CollectionConfig = {
       },
     },
     {
+      name: 'relatedSessions',
+      type: 'join',
+      collection: 'sessions',
+      on: 'goals',
+      admin: {
+        description: 'Sessions logged to this Goal',
+      },
+    },
+    {
       name: 'startDate',
       type: 'date',
       admin: {

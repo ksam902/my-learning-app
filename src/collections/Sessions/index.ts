@@ -97,14 +97,14 @@ export const Sessions: CollectionConfig = {
       },
     },
     {
-      name: 'tasks',
+      name: 'goals',
       type: 'relationship',
       admin: {
         position: 'sidebar',
         sortOptions: 'title',
       },
       hasMany: true,
-      relationTo: 'tasks',
+      relationTo: 'goals',
     },
     {
       name: 'projectsInfo', // This won't be stored in the database
