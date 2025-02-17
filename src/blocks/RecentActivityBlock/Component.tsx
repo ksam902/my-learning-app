@@ -2,6 +2,7 @@ import React from 'react'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { RecentActivityClient } from './client'
+import './styles.scss'
 
 export const RecentActivityBlock: React.FC = async () => {
   const payload = await getPayload({ config: configPromise })
@@ -13,9 +14,5 @@ export const RecentActivityBlock: React.FC = async () => {
     sort: '-createdAt',
   })
 
-  return (
-    <div className="container my-8">
-      <RecentActivityClient sessions={sessions.docs} />
-    </div>
-  )
+  return <RecentActivityClient sessions={sessions.docs} />
 }

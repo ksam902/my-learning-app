@@ -1,0 +1,43 @@
+.recent-activity {
+  color: black;
+
+  .session-date {
+    color: #6b7280;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .session-time {
+    color: #9ca3af;
+    font-size: 0.75rem;
+  }
+
+  .session-card {
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid #f3f4f6;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: #f9fafb;
+    }
+  }
+
+  .goals-list {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+
+    .goal-tag {
+      background-color: #f3f4f6;
+      color: #4b5563;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+  }
+}

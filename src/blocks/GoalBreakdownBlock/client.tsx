@@ -7,7 +7,6 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
 type GoalWithTime = {
   id: string
   title: string
-  priority: 'high' | 'medium' | 'low'
   endDate: string
   dependencies?: Array<{ id: string; title: string }> | null
   timeInvested: number
@@ -17,17 +16,21 @@ type Props = {
   goals: GoalWithTime[]
 }
 
-const COLORS = {
-  high: '#EF4444',
-  medium: '#F59E0B',
-  low: '#10B981',
-}
+const CHART_COLORS = [
+  '#3B82F6', // blue-500
+  '#10B981', // emerald-500
+  '#F59E0B', // amber-500
+  '#EC4899', // pink-500
+  '#8B5CF6', // violet-500
+  '#14B8A6', // teal-500
+  '#F43F5E', // rose-500
+  '#6366F1', // indigo-500
+]
 
 export const GoalBreakdownClient: React.FC<Props> = ({ goals }) => {
   const timeData = goals.map((goal) => ({
     name: goal.title,
     value: goal.timeInvested,
-    priority: goal.priority,
   }))
 
   return (
@@ -45,19 +48,22 @@ export const GoalBreakdownClient: React.FC<Props> = ({ goals }) => {
                   cx="50%"
                   cy="50%"
                   outerRadius={80}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                 >
                   {timeData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[entry.priority]} />
+                    <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
                   ))}
                 </Pie>
                 <Tooltip formatter={(value: number) => `${Math.round(value / 60)} hours`} />
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <div className="space-y-4">
-            {goals.map((goal) => (
-              <GoalCard key={goal.id} goal={goal} />
+          <div className="space-y-2">
+            {goals.map((goal, index) => (
+              <GoalCard
+                key={goal.id}
+                goal={goal}
+                color={CHART_COLORS[index % CHART_COLORS.length]}
+              />
             ))}
           </div>
         </div>
@@ -66,37 +72,21 @@ export const GoalBreakdownClient: React.FC<Props> = ({ goals }) => {
   )
 }
 
-const GoalCard: React.FC<{ goal: GoalWithTime }> = ({ goal }) => (
-  <div className="border rounded-lg p-4">
-    <div className="flex items-center justify-between mb-2">
-      <h3 className="text-lg font-medium">{goal.title}</h3>
-      <PriorityBadge priority={goal.priority} />
+const GoalCard: React.FC<{ goal: GoalWithTime; color: string }> = ({ goal, color }) => (
+  <div className="border rounded-lg p-3">
+    <div className="flex items-center gap-2 mb-1">
+      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }}></div>
+      <h3 className="text-sm font-medium">{goal.title}</h3>
     </div>
-    <div className="text-sm text-gray-500 space-y-2">
-      <div className="flex items-center space-x-2">
-        <span>Deadline:</span>
+    <div className="text-xs text-gray-500 space-y-1">
+      <div className="flex items-center justify-between">
         <DeadlineIndicator date={goal.endDate} />
+        <span>{Math.round(goal.timeInvested / 60)} hours</span>
       </div>
-      <div>Time invested: {Math.round(goal.timeInvested / 60)} hours</div>
       {goal.dependencies?.length > 0 && <DependenciesList dependencies={goal.dependencies} />}
     </div>
   </div>
 )
-
-const PriorityBadge: React.FC<{ priority: string }> = ({ priority }) => {
-  const colors = {
-    high: 'bg-red-100 text-red-800',
-    medium: 'bg-amber-100 text-amber-800',
-    low: 'bg-emerald-100 text-emerald-800',
-  }
-  return (
-    <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${colors[priority]}`}
-    >
-      {priority.charAt(0).toUpperCase() + priority.slice(1)}
-    </span>
-  )
-}
 
 const DeadlineIndicator: React.FC<{ date: string }> = ({ date }) => {
   const deadlineDate = new Date(date)
@@ -108,9 +98,7 @@ const DeadlineIndicator: React.FC<{ date: string }> = ({ date }) => {
       ? 'bg-yellow-100 text-yellow-800'
       : 'bg-gray-100 text-gray-800'
   return (
-    <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${styles}`}
-    >
+    <span className={`text-xs ${styles} px-2 py-0.5 rounded-full`}>
       {format(deadlineDate, 'MMM d, yyyy')}
     </span>
   )
