@@ -12,7 +12,7 @@ export const Sessions: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    defaultColumns: ['date', 'duration', 'timeOfDay', 'tasks', 'projectsInfo'],
+    defaultColumns: ['date', 'duration', 'timeOfDay', 'tasks', 'goals'],
   },
   fields: [
     {

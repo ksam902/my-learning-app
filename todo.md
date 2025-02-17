@@ -17,7 +17,7 @@ Potential blocks
 - Recent Activity Feed - done
 - Weekly Focus Block
 - Streak & Consistency Tracker
-- Goal Breakdown Block
+- Goal Breakdown Block - done
 - Learning Insights Block
 - Upcoming Deadlines Block
 - Achievement Gallery

@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 
-import { GoalsBlock } from '@/blocks/GoalsBlock/Component'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { draftMode } from 'next/headers'
 import React from 'react'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import PageClient from './page.client'
-import SessionHeatmapBlock from '@/blocks/SessionHeatmapBlock/Component'
+import { GoalsBlock } from '@/blocks/GoalsBlock/Component'
+import { SessionHeatmapBlock } from '@/blocks/SessionHeatmapBlock/Component'
+import { GoalBreakdownBlock } from '@/blocks/GoalBreakdownBlock/Component'
 import { RecentActivityBlock } from '@/blocks/RecentActivityBlock/Component'
 
 export default async function Dashboard() {
@@ -26,6 +27,7 @@ export default async function Dashboard() {
         </div>
         <div>
           <RecentActivityBlock />
+          <GoalBreakdownBlock />
         </div>
       </div>
     </article>

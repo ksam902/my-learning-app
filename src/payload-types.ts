@@ -748,6 +748,8 @@ export interface Goal {
   status: 'not-started' | 'in-progress' | 'completed';
   goalType: 'personal' | 'work';
   tags?: (string | Tag)[] | null;
+  priority: 'high' | 'medium' | 'low';
+  dependencies?: (string | Goal)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1375,6 +1377,8 @@ export interface GoalsSelect<T extends boolean = true> {
   status?: T;
   goalType?: T;
   tags?: T;
+  priority?: T;
+  dependencies?: T;
   updatedAt?: T;
   createdAt?: T;
 }

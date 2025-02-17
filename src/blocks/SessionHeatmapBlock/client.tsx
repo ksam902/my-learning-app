@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import CalendarHeatmap from 'react-calendar-heatmap'
 import 'react-calendar-heatmap/dist/styles.css'
 import { startOfMonth, endOfMonth, format, subMonths, addMonths, parseISO, subDays } from 'date-fns'
+import { log } from 'console'
 
 type Session = {
   id: string

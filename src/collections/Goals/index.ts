@@ -120,5 +120,29 @@ export const Goals: CollectionConfig = {
       hasMany: true,
       relationTo: 'tags',
     },
+    {
+      name: 'priority',
+      type: 'select',
+      required: true,
+      options: [
+        { label: 'High', value: 'high' },
+        { label: 'Medium', value: 'medium' },
+        { label: 'Low', value: 'low' },
+      ],
+      defaultValue: 'medium',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'dependencies',
+      type: 'relationship',
+      relationTo: 'goals',
+      hasMany: true,
+      admin: {
+        description: 'Goals that must be completed before this one can start',
+        position: 'sidebar',
+      },
+    },
   ],
 }
