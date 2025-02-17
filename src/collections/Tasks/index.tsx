@@ -30,8 +30,23 @@ export const Tasks: CollectionConfig = {
               name: 'description',
               type: 'textarea',
               admin: {
-                rows: 25,
+                rows: 10,
               },
+            },
+            {
+              name: 'deliverables',
+              type: 'array',
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                  required: true,
+                },
+                {
+                  name: 'completed',
+                  type: 'checkbox',
+                },
+              ],
             },
           ],
           label: 'Meta',

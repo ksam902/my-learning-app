@@ -5,7 +5,7 @@
 
 TODO:
 
-- Additional collections: Goals, Mentor/Mentee, Resources, Surveys, Habits(?)
+- Additional collections: Mentor/Mentee, Resources, Surveys, Habits(?), TODO lists?
 
 - User Stories
 

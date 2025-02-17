@@ -65,12 +65,12 @@ const ProjectsInfo: React.FC = () => {
   }, [tasks?.value])
 
   if (loading) {
-    return <div className="payload-field">Loading project info...</div>
+    return <div className="field-type ui">Loading project info...</div>
   }
 
   if (error) {
     return (
-      <div className="payload-field" style={{ color: 'red' }}>
+      <div className="field-type ui" style={{ color: 'red' }}>
         {error}
       </div>
     )
@@ -78,7 +78,7 @@ const ProjectsInfo: React.FC = () => {
 
   if (!projects.length) {
     return (
-      <div className="payload-field">No projects associated with this session&apos;s tasks.</div>
+      <div className="field-type ui">No projects associated with this session&apos;s tasks.</div>
     )
   }
 

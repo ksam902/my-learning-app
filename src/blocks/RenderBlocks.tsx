@@ -42,7 +42,7 @@ export const RenderBlocks: React.FC<{
               )
             }
           }
-          return null
+          return <div key={index}>Block Not Found.</div>
         })}
       </Fragment>
     )

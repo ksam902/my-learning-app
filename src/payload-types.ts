@@ -672,6 +672,13 @@ export interface Task {
   id: string;
   title: string;
   description?: string | null;
+  deliverables?:
+    | {
+        title: string;
+        completed?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
   codeSnippets?:
     | {
         title: string;
@@ -1291,6 +1298,13 @@ export interface UsersSelect<T extends boolean = true> {
 export interface TasksSelect<T extends boolean = true> {
   title?: T;
   description?: T;
+  deliverables?:
+    | T
+    | {
+        title?: T;
+        completed?: T;
+        id?: T;
+      };
   codeSnippets?:
     | T
     | {
