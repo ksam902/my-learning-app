@@ -673,6 +673,7 @@ export interface Task {
   relatedProject?: (string | null) | Project;
   startDate?: string | null;
   endDate?: string | null;
+  completed?: boolean | null;
   status: 'not-started' | 'in-progress' | 'completed' | 'blocked' | 'needs-review';
   taskType: 'learning' | 'implementation' | 'bug-fix' | 'documentation' | 'research' | 'review' | 'refactoring';
   tags?: (string | Tag)[] | null;
@@ -1279,6 +1280,7 @@ export interface TasksSelect<T extends boolean = true> {
   relatedProject?: T;
   startDate?: T;
   endDate?: T;
+  completed?: T;
   status?: T;
   taskType?: T;
   tags?: T;

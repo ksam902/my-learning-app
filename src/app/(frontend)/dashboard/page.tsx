@@ -9,6 +9,7 @@ import { GoalsBlock } from '@/blocks/GoalsBlock/Component'
 import { SessionHeatmapBlock } from '@/blocks/SessionHeatmapBlock/Component'
 import { GoalBreakdownBlock } from '@/blocks/GoalBreakdownBlock/Component'
 import { RecentActivityBlock } from '@/blocks/RecentActivityBlock/Component'
+import { TasksBlock } from '@/blocks/TasksBlock/Component'
 
 export default async function Dashboard() {
   const { isEnabled: draft } = await draftMode()
@@ -22,6 +23,7 @@ export default async function Dashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
+          <TasksBlock />
           <GoalsBlock />
           <GoalBreakdownBlock />
         </div>

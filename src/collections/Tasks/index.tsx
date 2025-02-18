@@ -62,6 +62,16 @@ export const Tasks: CollectionConfig = {
       },
       // TODO: validation with start date.
     },
+
+    {
+      name: 'completed',
+      type: 'checkbox',
+      admin: {
+        position: 'sidebar',
+        description: 'Completed',
+      },
+      defaultValue: false,
+    },
     {
       name: 'status',
       type: 'select',
