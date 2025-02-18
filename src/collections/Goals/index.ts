@@ -26,37 +26,57 @@ export const Goals: CollectionConfig = {
       type: 'textarea',
     },
     {
-      name: 'milestones',
-      type: 'array',
-      fields: [
+      type: 'tabs',
+      tabs: [
         {
-          name: 'title',
-          type: 'text',
-          required: true,
+          label: 'Milestones',
+          fields: [
+            {
+              name: 'milestones',
+              type: 'array',
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                  required: true,
+                },
+                {
+                  name: 'completed',
+                  type: 'checkbox',
+                },
+              ],
+            },
+          ],
         },
         {
-          name: 'completed',
-          type: 'checkbox',
+          label: 'Projects',
+          fields: [
+            {
+              name: 'relatedProjects',
+              type: 'join',
+              collection: 'projects', // Reference the tasks collection
+              on: 'relatedGoals', // Field name in Tasks collection that references tags
+              admin: {
+                defaultColumns: ['title', 'projectType'],
+              },
+            },
+          ],
+        },
+        {
+          label: 'Sessions',
+          fields: [
+            {
+              name: 'relatedSessions',
+              type: 'join',
+              collection: 'sessions',
+              on: 'goals',
+              admin: {
+                description: 'Sessions logged to this Goal',
+              },
+            },
+          ],
         },
       ],
-    },
-    {
-      name: 'relatedProjects',
-      type: 'join',
-      collection: 'projects', // Reference the tasks collection
-      on: 'relatedGoals', // Field name in Tasks collection that references tags
-      admin: {
-        defaultColumns: ['title', 'projectType'],
-      },
-    },
-    {
-      name: 'relatedSessions',
-      type: 'join',
-      collection: 'sessions',
-      on: 'goals',
-      admin: {
-        description: 'Sessions logged to this Goal',
-      },
     },
     {
       name: 'startDate',

@@ -17,66 +17,27 @@ export const Tasks: CollectionConfig = {
   },
   fields: [
     {
-      type: 'tabs',
-      tabs: [
-        {
-          fields: [
-            {
-              name: 'title',
-              type: 'text',
-              required: true,
-            },
-            {
-              name: 'description',
-              type: 'textarea',
-              admin: {
-                rows: 10,
-              },
-            },
-            {
-              name: 'deliverables',
-              type: 'array',
-              fields: [
-                {
-                  name: 'title',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'completed',
-                  type: 'checkbox',
-                },
-              ],
-            },
-          ],
-          label: 'Meta',
-        },
-        {
-          fields: [
-            {
-              name: 'codeSnippets',
-              type: 'array',
-              fields: [
-                {
-                  name: 'title',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'code',
-                  type: 'code',
-                  required: true,
-                },
-                {
-                  name: 'description',
-                  type: 'textarea',
-                },
-              ],
-            },
-          ],
-          label: 'Code Snippets',
-        },
-      ],
+      name: 'title',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'description',
+      type: 'textarea',
+      admin: {
+        rows: 10,
+      },
+    },
+    {
+      name: 'relatedProject',
+      type: 'relationship',
+      relationTo: 'projects',
+      hasMany: false,
+      admin: {
+        description: 'Link to related Project',
+        position: 'sidebar',
+        sortOptions: 'title',
+      },
     },
     {
       name: 'startDate',
@@ -147,17 +108,6 @@ export const Tasks: CollectionConfig = {
       },
       hasMany: true,
       relationTo: 'tags',
-    },
-    {
-      name: 'relatedProject',
-      type: 'relationship',
-      relationTo: 'projects',
-      hasMany: false,
-      admin: {
-        description: 'Link to related Project',
-        position: 'sidebar',
-        sortOptions: 'title',
-      },
     },
   ],
 }

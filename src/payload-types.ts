@@ -670,27 +670,37 @@ export interface Task {
   id: string;
   title: string;
   description?: string | null;
-  deliverables?:
+  relatedProject?: (string | null) | Project;
+  startDate?: string | null;
+  endDate?: string | null;
+  status: 'not-started' | 'in-progress' | 'completed' | 'blocked' | 'needs-review';
+  taskType: 'learning' | 'implementation' | 'bug-fix' | 'documentation' | 'research' | 'review' | 'refactoring';
+  tags?: (string | Tag)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: string;
+  title: string;
+  description?: string | null;
+  objectives?:
     | {
         title: string;
         completed?: boolean | null;
         id?: string | null;
       }[]
     | null;
-  codeSnippets?:
-    | {
-        title: string;
-        code: string;
-        description?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  startDate?: string | null;
-  endDate?: string | null;
-  status: 'not-started' | 'in-progress' | 'completed' | 'blocked' | 'needs-review';
-  taskType: 'learning' | 'implementation' | 'bug-fix' | 'documentation' | 'research' | 'review' | 'refactoring';
+  relatedTasks?: {
+    docs?: (string | Task)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  projectType: 'personal' | 'work';
   tags?: (string | Tag)[] | null;
-  relatedProject?: (string | null) | Project;
+  relatedGoals?: (string | Goal)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -755,31 +765,6 @@ export interface Goal {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projects".
- */
-export interface Project {
-  id: string;
-  title: string;
-  description?: string | null;
-  objectives?:
-    | {
-        title: string;
-        completed?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
-  relatedTasks?: {
-    docs?: (string | Task)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
-  projectType: 'personal' | 'work';
-  tags?: (string | Tag)[] | null;
-  relatedGoals?: (string | Goal)[] | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "sessions".
  */
 export interface Session {
@@ -791,18 +776,11 @@ export interface Session {
         id?: string | null;
       }[]
     | null;
-  blockers?:
-    | {
-        description: string;
-        resolution?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  nextSteps?: string | null;
   date: string;
   duration: number;
   timeOfDay?: ('morning' | 'afternoon' | 'evening') | null;
   goals?: (string | Goal)[] | null;
+  projects?: (string | Project)[] | null;
   energy?: ('1' | '2' | '3' | '4' | '5') | null;
   focus?: ('1' | '2' | '3' | '4' | '5') | null;
   updatedAt: string;
@@ -1298,27 +1276,12 @@ export interface UsersSelect<T extends boolean = true> {
 export interface TasksSelect<T extends boolean = true> {
   title?: T;
   description?: T;
-  deliverables?:
-    | T
-    | {
-        title?: T;
-        completed?: T;
-        id?: T;
-      };
-  codeSnippets?:
-    | T
-    | {
-        title?: T;
-        code?: T;
-        description?: T;
-        id?: T;
-      };
+  relatedProject?: T;
   startDate?: T;
   endDate?: T;
   status?: T;
   taskType?: T;
   tags?: T;
-  relatedProject?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1406,18 +1369,11 @@ export interface SessionsSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
-  blockers?:
-    | T
-    | {
-        description?: T;
-        resolution?: T;
-        id?: T;
-      };
-  nextSteps?: T;
   date?: T;
   duration?: T;
   timeOfDay?: T;
   goals?: T;
+  projects?: T;
   energy?: T;
   focus?: T;
   updatedAt?: T;

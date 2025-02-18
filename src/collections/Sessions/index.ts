@@ -35,29 +35,6 @@ export const Sessions: CollectionConfig = {
       ],
     },
     {
-      name: 'blockers',
-      type: 'array',
-      fields: [
-        {
-          name: 'description',
-          type: 'text',
-          required: true,
-        },
-        {
-          name: 'resolution',
-          type: 'textarea',
-        },
-      ],
-    },
-    {
-      name: 'nextSteps',
-      type: 'textarea',
-      admin: {
-        description: 'What needs to be done next?',
-        rows: 5,
-      },
-    },
-    {
       name: 'date',
       type: 'date',
       required: true,
@@ -100,6 +77,7 @@ export const Sessions: CollectionConfig = {
       name: 'goals',
       type: 'relationship',
       admin: {
+        description: 'Which goals did you work on?',
         position: 'sidebar',
         sortOptions: 'title',
       },
@@ -107,15 +85,26 @@ export const Sessions: CollectionConfig = {
       relationTo: 'goals',
     },
     {
-      name: 'projectsInfo', // This won't be stored in the database
-      type: 'ui',
+      name: 'projects',
+      type: 'relationship',
+      hasMany: true,
+      relationTo: 'projects',
       admin: {
+        description: 'Which projects did you work on?',
         position: 'sidebar',
-        components: {
-          Field: '@/components/ProjectsInfo',
-        },
+        sortOptions: 'title',
       },
     },
+    // {
+    //   name: 'projectsInfo', // This won't be stored in the database
+    //   type: 'ui',
+    //   admin: {
+    //     position: 'sidebar',
+    //     components: {
+    //       Field: '@/components/ProjectsInfo',
+    //     },
+    //   },
+    // },
     {
       name: 'energy',
       type: 'select',
