@@ -26,7 +26,7 @@ export const RecentActivityClient: React.FC<{
   return (
     <div className="recent-activity max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="bg-white shadow rounded-lg">
-        <div className="p-6 border-b">
+        <div className="p-6">
           <h2 className="text-2xl font-bold">Recent Activity</h2>
         </div>
 
@@ -40,13 +40,13 @@ export const RecentActivityClient: React.FC<{
                 <div className="flex items-center justify-between gap-8">
                   <div className="grid grid-cols-[auto_auto_1fr] items-center gap-8 min-w-0 flex-1">
                     <div className="flex-shrink-0">
-                      <span className="session-date">{format(sessionDate, 'MMM d')}</span>
-                      <span className="session-time ml-2">{session.timeOfDay}</span>
+                      <span className="session-date">{format(sessionDate, 'MMMM d')}</span>
+                      <span className="session-time ml-2">
+                        {session.timeOfDay} | {session.duration} minutes
+                      </span>
                     </div>
 
-                    <span className="text-sm text-gray-600 whitespace-nowrap">
-                      {session.duration}m
-                    </span>
+                    <span className="text-sm text-gray-600 whitespace-nowrap"></span>
 
                     {session.goals && session.goals.length > 0 && (
                       <div className="goals-list overflow-hidden">
